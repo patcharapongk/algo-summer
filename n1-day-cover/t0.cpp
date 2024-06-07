@@ -11,6 +11,8 @@ bitset<5> days_covered;
 int main() {
   days_covered.set();
   days_covered <<= 5-3;
+  days_covered |= 1;
   cout << days_covered << endl;
+
   return 0;
 }
