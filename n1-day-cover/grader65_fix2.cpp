@@ -25,19 +25,11 @@ void reset_vec(Vector &v) {
     }
 }
 
-bool check_all_cov() {
-    for (int i = 0; i < n; ++i) {
-        if (days_to_cov[i] == 0)
-            return false;
-    }
-    return true;
-}
-int count_ones(Vector &v) {
-    int ones = 0;
-    for (auto x : v)
-        if (x == 1)
-            ones++;
-    return ones;
+int check_all_days_cov() {
+  for (auto x : days_to_cov) {
+    if (x == 0) return 0;
+  }
+  return 1;
 }
 
 void check_nisit_data(Vector &ans) {
@@ -52,16 +44,12 @@ void check_nisit_data(Vector &ans) {
             }
         }
     }
-    if (nisit_count >= least_ppl) return;
-    bool covered_all_days = check_all_cov();
-    if (covered_all_days) {
-      least_ppl = min(least_ppl, nisit_count);
-    }
+    if (check_all_days_cov() == 1) least_ppl = min(least_ppl, nisit_count);
 }
 
 void brute(Vector &ans, int n) {
-    if (count_ones(ans) > least_ppl) return;
     if (n == ans.size()) {
+        // do soemthing
         check_nisit_data(ans);
         return;
     }
@@ -73,7 +61,7 @@ void brute(Vector &ans, int n) {
 
 void get_inputs() {
     cin >> n >> m;
-    days_to_cov.resize(n, 0);
+    days_to_cov.resize(n);
     int day;
     for (int i = 0; i < m; ++i) {
         cin >> day;
@@ -86,7 +74,6 @@ void get_inputs() {
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);
     get_inputs();
     Vector ans(m);
     brute(ans, 0);

@@ -23,11 +23,11 @@ int n, m;
 Matrix M;
 Vector selected;
 int min_result = 1e9;
-bitset<10> target;
+bitset<1000> target;
 
 // return 0 if not covered
 int check_days_covered(int nisit_id_bound) {
-  bitset<10> days_covered;
+  bitset<1000> days_covered;
   days_covered.set();
   days_covered <<= n;
   for (int nisit_id = 0; nisit_id < nisit_id_bound; ++nisit_id) {
@@ -37,7 +37,6 @@ int check_days_covered(int nisit_id_bound) {
       }
     }
   }
-  cout << "target/days_covered: " << target << " " << days_covered << endl;
   int result = (days_covered == target);
   return result;
 }
@@ -50,17 +49,14 @@ int count_nisit() {
   return count;
 }
 
-int brute(int nisit_id) {
-  cout << "current nisit selection: " << nisit_id << " ";
-  print_vector(selected);
+void brute(int nisit_id) {
   int result = check_days_covered(nisit_id);
+  if (result == 1) {
+    min_result = std::min(min_result, count_nisit());
+    return;
+  }
   if (nisit_id == m) {
-    if (result == 1) {
-      cout << "FOUND2" << endl;
-      min_result = std::min(min_result, count_nisit());
-      return count_nisit();
-    }
-    return -1;
+    return;
   }
   selected[nisit_id] = 1;
   brute(nisit_id + 1);
@@ -70,6 +66,7 @@ int brute(int nisit_id) {
 
 // careful day--
 int main() {
+  ios_base::sync_with_stdio(false); cin.tie(0);
   cin >> n >> m;
   M.resize(m, Vector(n, 0));
   target.set();
