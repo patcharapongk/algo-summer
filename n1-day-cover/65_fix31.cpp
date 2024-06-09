@@ -19,32 +19,25 @@ void print_vec(Vector &v) {
         cout << x << " ";
     cout << endl;
 }
+
 void reset_vec(Vector &v) {
     for (int i = 0; i < v.size(); ++i) {
         v[i] = 0;
     }
 }
 
-bool check_all_cov() {
-    for (int i = 0; i < n; ++i) {
-        if (days_to_cov[i] == 0)
-            return false;
+int check_all_days_cov() {
+    for (auto x : days_to_cov) {
+        if (x == 0) return 0;
     }
-    return true;
-}
-int count_ones(Vector &v) {
-    int ones = 0;
-    for (auto x : v)
-        if (x == 1)
-            ones++;
-    return ones;
+    return 1;
 }
 
+// add nisit to the day coverage
 void check_nisit_data(Vector &ans) {
     int nisit_count = 0;
     reset_vec(days_to_cov);
     for (int i = 0; i < ans.size(); ++i) {
-        // nisit is chosen
         if (ans[i] == 1) {
             nisit_count++;
             for (int x : nisit_map[i]) {
@@ -52,33 +45,29 @@ void check_nisit_data(Vector &ans) {
             }
         }
     }
-    if (nisit_count >= least_ppl) return;
-    bool covered_all_days = check_all_cov();
-    if (covered_all_days) {
-      least_ppl = min(least_ppl, nisit_count);
-    }
+    if (check_all_days_cov() == 1) least_ppl = min(least_ppl, nisit_count);
 }
 
-void brute(Vector &ans, int n) {
-    if (count_ones(ans) > least_ppl) return;
-    if (n == ans.size()) {
+void brute(Vector &ans, int nisit_count, int idx) {
+    if (nisit_count > least_ppl) return;
+    if (idx == ans.size()) {
         check_nisit_data(ans);
         return;
     }
-    ans[n] = 0;
-    brute(ans, n + 1);
-    ans[n] = 1;
-    brute(ans, n + 1);
+    ans[idx] = 0;
+    brute(ans, nisit_count, idx + 1);
+    ans[idx] = 1;
+    brute(ans, nisit_count + 1, idx + 1);
 }
 
 void get_inputs() {
     cin >> n >> m;
-    days_to_cov.resize(n, 0);
-    int day;
+    days_to_cov.resize(n, 0);  // Initialize with zeros
     for (int i = 0; i < m; ++i) {
+        int day;
         cin >> day;
-        int free_day;
         for (int k = 0; k < day; ++k) {
+            int free_day;
             cin >> free_day;
             nisit_map[i].push_back(free_day);
         }
@@ -86,10 +75,9 @@ void get_inputs() {
 }
 
 int main() {
-    ios_base::sync_with_stdio(false); cin.tie(0);
     get_inputs();
     Vector ans(m);
-    brute(ans, 0);
+    brute(ans, 0, 0);
     cout << least_ppl << endl;
     return 0;
 }
