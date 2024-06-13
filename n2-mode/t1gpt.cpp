@@ -12,7 +12,10 @@ int max3(int a, int b, int c) {
     return max(a, max(b, c));
 }
 
-Vector v = {1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3};
+//          0  1  2  3  4  5  6  7  8  9  0  1
+// Vector v = {1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3};
+//
+Vector v = {0, 1, 1, 1, 1, 1};
 
 Pair move_mid(int left, int half, int right) {
     int mid_entry = v[half];
@@ -34,7 +37,7 @@ Pair solve(int left, int right) {
     Pair halves = move_mid(left, half, right);
     int half1 = halves.first;
     int half2 = halves.second;
-
+    printf("h1 %d | h2 %d\n", half1, half2);
     Pair p1 = solve(left, half1 - 1);
     Pair p2 = {v[half], half2 - half1 + 1};
     Pair p3 = solve(half2 + 1, right);
