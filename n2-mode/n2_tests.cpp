@@ -118,29 +118,29 @@ Pair solve3(int left, int right) {
 /* --- Testing Function --- */
 void run_tests() {
     vector<Vector> test_cases = {
-        {},                                 // Empty vector
-        {1},                                // Single element
-        {1, 1, 1, 1, 1},                    // All elements the same
-        {1, 2},                             // Two different elements
-        {2, 2, 2, 2, 2, 3, 3, 3, 3},        // Two different elements with more duplicates
-        {1, 2, 3, 4, 5},                    // Increasing sequence
-        {1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3},  // Mixed elements
-        // std::vector<int>(1000000, 1),       // Large vector
-        {-3, -2, -1, 0, 1, 2, 3},    // Vector with negative numbers
-        {1, 1, 2, 3, 3, 4, 5, 5, 6}  // Vector with duplicates and unique elements
+        {},                                 // 1 Empty vector
+        {1},                                // 2 Single element
+        {1, 1, 1, 1, 1},                    // 3 All elements the same
+        {1, 2},                             // 4 Two different elements
+        {2, 2, 2, 2, 2, 3, 3, 3, 3},        // 5 Two different elements with more duplicates
+        {1, 2, 3, 4, 5},                    // 6 Increasing sequence
+        {1, 1, 2, 5, 5},                    // 7 NEW
+        {1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3},  // 8 Mixed elements
+        {-3, -2, -1, 0, 1, 2, 3},           // 9 Vector with negative numbers
+        {1, 1, 2, 3, 3, 4, 5, 5, 6}         // 10 Vector with duplicates and unique elements
     };
 
     vector<Pair> expected_results = {
-        {-1, -1},  // Empty vector
-        {1, 1},    // Single element
-        {1, 5},    // All elements the same
-        {1, 1},    // Two different elements
-        {2, 5},    // Two different elements with more duplicates
-        {1, 1},    // Increasing sequence
-        {2, 4},    // Mixed elements
-        // {1, 1000000},  // Large vector
-        {-3, 1},  // Vector with negative numbers
-        {1, 2}    // Vector with duplicates and unique elements
+        {-1, -1},  // 1 Empty vector
+        {1, 1},    // 2 Single element
+        {1, 5},    // 3 All elements the same
+        {1, 1},    // 4 Two different elements
+        {2, 5},    // 5 Two different elements with more duplicates
+        {1, 1},    // 6 Increasing sequence
+        {1, 2},    // 7 NEW
+        {2, 4},    // 8 Mixed elements
+        {-3, 1},   // 9 Vector with negative numbers
+        {1, 2}     // 10 Vector with duplicates and unique elements
     };
 
     for (size_t i = 0; i < test_cases.size(); ++i) {
@@ -158,13 +158,13 @@ void run_tests() {
         cout << "solve3 - Mode: " << result3.first << ", Frequency: " << result3.second << endl;
 
         if (result1 != expected_results[i]) {
-            cout << ">> solve1 failed for test case " << i << endl;
+            cout << ">> solve1 failed for test case " << i + 1 << endl;
         }
         if (result2 != expected_results[i]) {
-            cout << ">> solve2 failed for test case " << i << endl;
+            cout << ">> solve2 failed for test case " << i + 1 << endl;
         }
         if (result3 != expected_results[i]) {
-            cout << ">> solve3 failed for test case " << i << endl;
+            cout << ">> solve3 failed for test case " << i + 1 << endl;
         }
 
         cout << "----------------------------------------" << endl;
