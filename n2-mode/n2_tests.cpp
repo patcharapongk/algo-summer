@@ -45,17 +45,17 @@ Pair solve1(int left, int right) {
     Pair p2 = solve1(half + 1, right);
 
     // Conquer and fix the boundaries
+
     int mid_mode = v[half];
     int mid_mode_count = 1;
-    if (half + 1 < right && v[half] == v[half + 1]) {
-        int h1 = half;
-        int h2 = half + 1;
-        while (h1 >= 0 && v[h1] == v[half])
-            --h1;
-        while (h2 < v.size() && v[h2] == v[half])
-            ++h2;
-        mid_mode_count = h2 - h1 - 1;
-    }
+    int h1 = half - 1;
+    int h2 = half + 1;
+
+    while (left <= h1 && v[h1] == mid_mode) --h1;
+    while (right >= h1 && v[h2] == mid_mode) ++h2;
+
+    mid_mode_count = h2 - h1 - 1;
+
     int max_count = max3(p1.second, p2.second, mid_mode_count);
     if (max_count == p1.second)
         return {p1.first, p1.second};
