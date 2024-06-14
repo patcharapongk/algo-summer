@@ -20,19 +20,6 @@ int max3(int a, int b, int c) {
 }
 
 /* --- solve1 : Divide by half, fix the conquer part --- */
-Pair find_mode(int left, int right) {
-    Map map;
-    for (int i = left; i <= right; ++i) {
-        map[v[i]]++;
-    }
-
-    auto maxEntry = std::max_element(
-        map.begin(), map.end(),
-        [](const Pair &a, const Pair &b) { return a.second < b.second; });
-
-    return {maxEntry->first, maxEntry->second};
-}
-
 Pair solve1(int left, int right) {
     if (v.size() == 0) return {-1, -1};
     if (left == right)
