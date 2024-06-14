@@ -18,7 +18,6 @@ void print_vec(Vector &v) {
 
 int max3(int a, int b, int c) { return max(a, max(b, c)); }
 
-// inclusive
 Pair find_mode(int left, int right) {
     Map map;
     for (int i = left; i <= right; ++i) {
@@ -39,24 +38,26 @@ Pair solve(int left, int right) {
 
     int half = left + (right - left) / 2;
 
+    // Divide by half
     Pair p1 = solve(left, half);
     Pair p2 = solve(half + 1, right);
 
+    // Conquer and fix the boundaries
     int mid_mode = v[half];
     int mid_mode_count = 1;
-    int h1 = half - 1;
-    int h2 = half + 1;
+    int h1 = half, h2 = half;
 
-    while (left <= h1 && v[h1] == mid_mode) --h1;
-    while (right >= h1 && v[h2] == mid_mode) ++h2;
+    while (h1 >= left && v[h1] == mid_mode) --h1;
+    while (h2 <= right && v[h2] == mid_mode) ++h2;
 
     mid_mode_count = h2 - h1 - 1;
-    int max_count = max3(p1.second, p2.second, mid_mode_count);
+
+    int max_count = max3(p1.second, mid_mode_count, p2.second);
     if (max_count == p1.second)
         return {p1.first, p1.second};
-    if (max_count == p2.second)
-        return {p2.first, p2.second};
-    return {mid_mode, mid_mode_count};
+    if (max_count == mid_mode_count)
+        return {mid_mode, mid_mode_count};
+    return {p2.first, p2.second};
 }
 
 int main() {

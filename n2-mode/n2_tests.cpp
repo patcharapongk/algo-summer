@@ -45,23 +45,21 @@ Pair solve1(int left, int right) {
     Pair p2 = solve1(half + 1, right);
 
     // Conquer and fix the boundaries
-
     int mid_mode = v[half];
     int mid_mode_count = 1;
-    int h1 = half - 1;
-    int h2 = half + 1;
+    int h1 = half, h2 = half;
 
-    while (left <= h1 && v[h1] == mid_mode) --h1;
-    while (right >= h1 && v[h2] == mid_mode) ++h2;
+    while (h1 >= left && v[h1] == mid_mode) --h1;
+    while (h2 <= right && v[h2] == mid_mode) ++h2;
 
     mid_mode_count = h2 - h1 - 1;
 
-    int max_count = max3(p1.second, p2.second, mid_mode_count);
+    int max_count = max3(p1.second, mid_mode_count, p2.second);
     if (max_count == p1.second)
         return {p1.first, p1.second};
-    if (max_count == p2.second)
-        return {p2.first, p2.second};
-    return {mid_mode, mid_mode_count};
+    if (max_count == mid_mode_count)
+        return {mid_mode, mid_mode_count};
+    return {p2.first, p2.second};
 }
 
 /* --- solve2 : Divide by half, mid, right           --- */
@@ -152,10 +150,10 @@ void run_tests() {
         Pair result2 = solve2(0, v.size() - 1);
         Pair result3 = solve3(0, v.size() - 1);
 
-        cout << "Expected - Mode: " << expected_results[i].first << ", Frequency: " << expected_results[i].second << endl;
-        cout << "solve1 - Mode: " << result1.first << ", Frequency: " << result1.second << endl;
-        cout << "solve2 - Mode: " << result2.first << ", Frequency: " << result2.second << endl;
-        cout << "solve3 - Mode: " << result3.first << ", Frequency: " << result3.second << endl;
+        // cout << "Expected - Mode: " << expected_results[i].first << ", Frequency: " << expected_results[i].second << endl;
+        // cout << "solve1 - Mode: " << result1.first << ", Frequency: " << result1.second << endl;
+        // cout << "solve2 - Mode: " << result2.first << ", Frequency: " << result2.second << endl;
+        // cout << "solve3 - Mode: " << result3.first << ", Frequency: " << result3.second << endl;
 
         if (result1 != expected_results[i]) {
             cout << ">> solve1 failed for test case " << i + 1 << endl;
